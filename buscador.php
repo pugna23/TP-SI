@@ -30,6 +30,18 @@ ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
 	if ($ds){
 		$a=ldap_bind($ds, $usuario, $pass);
 		if($a){
+			/*CONTRAMEDIDAS
+			$gn = str_replace("*","",$gn);
+			$gn = str_replace("(","",$gn);
+			$gn = str_replace(")","",$gn);
+			$gn = str_replace("&","",$gn);
+			$gn = str_replace("|","",$gn);
+			$user = str_replace("*","",$user);
+			$user = str_replace("(","",$user);
+			$user = str_replace(")","",$user);
+			$user = str_replace("&","",$user);
+			$user = str_replace("|","",$user);
+			*/
 			$buscar ="(&(uid=".$user.")(description=mod)(givenname=".$gn."))";
 			echo "query:  ".$buscar."<p>";
 			$sr = ldap_search($ds, "dc=example, dc=com",$buscar);
