@@ -6,12 +6,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 	echo $nameErr;
    }else{
 	$user=$_POST["user"];
+	$gn=$_POST["gn"];
    }
+
 }
 ?>
 
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-	Buscador: <input type="text" name="user" value="<?php echo $user;?>">
+	Nombre: </br><input type="text" name="user" value="<?php echo $user;?>"></br>
+	Apodo: </br><input type="text" name="gn" value="<?php echo $gn;?>"></br>
 	<input type="submit" name="submit" value="Buscar">
 </form>
 <?php
@@ -27,7 +30,7 @@ ldap_set_option($ds, LDAP_OPT_PROTOCOL_VERSION, 3);
 	if ($ds){
 		$a=ldap_bind($ds, $usuario, $pass);
 		if($a){
-			$buscar ="(&(uid=".$user.")(description=mod))";
+			$buscar ="(&(uid=".$user.")(description=mod)(givenname=".$gn."))";
 			echo "query:  ".$buscar."<p>";
 			$sr = ldap_search($ds, "dc=example, dc=com",$buscar);
 			$info = ldap_get_entries($ds, $sr);
