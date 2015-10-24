@@ -1,5 +1,23 @@
 <?php
- echo "<h1>Ejercicio no4 - Bypass login con asteriscos</h1>";
+$user="";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+   if (empty($_POST["user"])) {
+     $nameErr = "Name is required";
+	echo $nameErr;
+   }else{
+	$user=$_POST["user"];
+	$p=$_POST["p"];
+   }
+}
+?>
+
+<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+	Name: </br><input type="text" name="user" value="<?php echo $user;?>"></br>
+	Pass: </br><input type="password" name="p" value="<?php echo $p;?>"></br>
+	<input type="submit" name="submit" value="Login">
+</form>
+
+<?php
 
  $usuario = "cn=admin,dc=example,dc=com";
  $pass = "eladmin23";
@@ -12,7 +30,7 @@ if ($ds){
 
 	$a=ldap_bind($ds, $usuario, $pass);
 	if ($a){
-		$buscar = "(&(uid=".$_GET['uid'].")(userPassword=".$_GET['p']."))";
+		$buscar = "(&(uid=".$user.")(userPassword=".$p."))";
 	
 		/*CONTRAMEDIDA
 		$buscar = str_replace("*","",$buscar);
